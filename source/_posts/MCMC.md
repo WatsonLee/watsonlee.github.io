@@ -82,7 +82,7 @@ $$\begin{split}
 
 ## 3.1 基本定义
 
-假设在时刻0的随机变量 $\mathbf{x}_0$ 遵循概率分布 $P(\mathbf{x}_0)=\pi_0$，称为初始状态分布，在某个时刻 $t \ge 1$ 的随机变量 $\mathbf{x}_t$ 与前一个时刻的苏基变量 $\mathbf{x}_{t-1}$ 之间有条件分布 $P(\mathbf{x}_t |\mathbf{x}_{t-1})$， 如果 $\mathbf{x}_t$ 只依赖于 $\mathbf{x}_{t-1}$， 而不依赖于过去的随机变量 $\{\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_{t-2}\}$，这一性质称为马尔可夫性，即：
+假设在时刻0的随机变量 $\mathbf{x}_0$ 遵循概率分布 $P(\mathbf{x}_0)=\pi_0$，称为初始状态分布，在某个时刻 $t \ge 1$ 的随机变量 $\mathbf{x}_t$ 与前一个时刻的随机变量 $\mathbf{x}_{t-1}$ 之间有条件分布 $P(\mathbf{x}_t |\mathbf{x}_{t-1})$， 如果 $\mathbf{x}_t$ 只依赖于 $\mathbf{x}_{t-1}$， 而不依赖于过去的随机变量 $\{\mathbf{x}_0, \mathbf{x}_1, \ldots, \mathbf{x}_{t-2}\}$，这一性质称为马尔可夫性，即：
 
 $$P(\mathbf{x}_t|\mathbf{x}_0, \mathbf{x}_1, \cdots, \mathbf{x}_{t-1}) = P(\mathbf{x}_t |\mathbf{x}_{t-1}) \quad t=1,2,\cdots \tag{3}$$
 
@@ -94,10 +94,10 @@ $$P(\mathbf{x}_t|\mathbf{x}_0, \mathbf{x}_1, \cdots, \mathbf{x}_{t-1}) = P(\math
 
 ### 3.2.1 转移概率矩阵和状态分布
 
-离散状态马尔可夫链 $\mathbf{X} = \{\mathbf{x}_0,\mathbf{x}_1, \cdots, \mathbf{x}_{t}, \cdots\}$， 随机变量 $\mathbf{x}_t (t=0,1,2,\cdots)$ 定义在离散空间 $\mathcal{S}$，转移概率分布可以用矩阵表示。如果马尔可夫链在时刻 $(t-1)$ 处于状态 $j$, 在 $t$ 时刻移动到状态 $i$， 则转移概率记作：
-$$p_{ij} = (\mathbf{x}_t = i | \mathbf{x}_{t-1} = j), \quad i=1,2,\cdots; \quad j=1,2,\cdots \tag{4}$$
+离散状态马尔可夫链 $\mathbf{X} = \{\mathbf{x}_0,\mathbf{x}_1, \cdots, \mathbf{x}_{t}, \cdots\}$， 随机变量 $\mathbf{x}_t (t=0,1,2,\cdots)$ 定义在离散空间 $\mathcal{S}$，转移概率分布可以用矩阵表示。如果马尔可夫链在时刻 $(t-1)$ 处于状态 $i$, 在 $t$ 时刻移动到状态 $j$， 则转移概率记作：
+$$p_{ij} = (\mathbf{x}_t = j | \mathbf{x}_{t-1} = i), \quad i=1,2,\cdots; \quad j=1,2,\cdots \tag{4}$$
 满足
-$$p_{ij}\ge0, \sum_i p_{ij} = 1$$
+$$p_{ij}\ge0, \sum_j p_{ij} = 1$$
 转移概率矩阵可以写为：
 $$\boldsymbol{P} = \left[\begin{matrix}
 p_{11} & p_{12} & p_{13} & \cdots \\
@@ -106,7 +106,7 @@ p_{31} & p_{32} & p_{33} & \cdots \\
 \cdots & \cdots & \cdots & \cdots \\
 \end{matrix}\right] \tag{5}$$
 
-转移概率矩阵 $\boldsymbol{P}$ 满足公式（2）性质，且满足这两个条件的矩阵通常被称为随机矩阵（Stochastic Matrix）。注意，这里矩阵列之和为1，表示从状态 $j$ 转换至状态空间 $\mathcal{S}$ 中任意状态的概率之和为1. 
+转移概率矩阵 $\boldsymbol{P}$ 满足公式（2）性质，且满足这两个条件的矩阵通常被称为随机矩阵（Stochastic Matrix）。注意，这里矩阵行之和为1，表示从状态 $i$ 转换至状态空间 $\mathcal{S}$ 中任意状态的概率之和为1. 
 
 将马尔可夫链在 $t$ 时刻的概率分布称为 $t$ 时刻的状态分布，记作：
 $$\pi(t)=\left[\begin{matrix}
@@ -129,14 +129,14 @@ $$\pi(t) = P\pi(t-1) \tag{9}$$
 $$\begin{split}
 \pi_i(t) &= P(\mathbf{x}_t = i) \\
 &= \sum_{m\in \mathcal{S}} P(\mathbf{x}_t = i|\mathbf{x}_{t-1}=m) P(\mathbf{x}_{t-1} = m) \\
-&= \sum_{m\in\mathcal{S}} p_{im} \pi_m(t-1) 
+&= \sum_{m\in\mathcal{S}} p_{mi} \pi_m(t-1) 
 \end{split}\tag{10}$$
 
 马尔可夫链在 $t$ 时刻的状态分布可以通过递推得到，根据公式（7），我们可以得到
 $$\pi(t)=\boldsymbol{P} \pi(t-1)=\boldsymbol{P} (\boldsymbol{P} \pi(t-2))=\boldsymbol{P} ^2\pi(t-2)=\cdots=\boldsymbol{P} ^t\pi(0) \tag{11}$$
 其中 $P^t$ 称为 $t$ 步转移概率矩阵，
-$$p_{ij}^t = P(\mathbf{x}_t=i|\mathbf{x}_0=j)\tag{12}$$
-表示时刻0从状态 $j$ 触发，时刻 $t$ 到达状态 $i$ 的 $t$ 步转移概率。
+$$p_{ij}^t = P(\mathbf{x}_t=j|\mathbf{x}_0=i)\tag{12}$$
+表示时刻0从状态 $i$ 触发，时刻 $t$ 到达状态 $j$ 的 $t$ 步转移概率。
 
 尤其是，当t=0时，做如下规定：
 $$p_{ij}^0 = \begin{cases}
@@ -170,7 +170,7 @@ CK方程旨在描述 $p_{ij}^t$ 和 $p_{ij}$ 之间的关系，对于一切 $t,n
 
 ### 3.3.1 可约（连通）/不可约
 
-$\color{green}{\textbf{定义 1 }}$如果存在 $n \ge 0$，使得 $p_{ij}^{(n)}>0$，记为 $j \rightarrow i$，称为状态 $j$ 可达状态 $i$（$i,j\in\mathcal{S}$）。如果同时有 $i \rightarrow j$，则称状态 $j$ 与 $i$ 互通，记为 $ j \leftrightarrow i$。
+$\color{green}{\textbf{定义 1 }}$如果存在 $n \ge 0$，使得 $p_{ij}^{(n)}>0$，记为 $i \rightarrow j$，称为状态 $i$ 可达状态 $j$（$i,j\in\mathcal{S}$）。如果同时有 $j \rightarrow i$，则称状态 $j$ 与 $i$ 互通，记为 $ j \leftrightarrow i$。
 
 $\color{red}{\textbf{定理 1 }}$ 互通是一种等价关系，即满足以下三个性质：
 
@@ -190,15 +190,15 @@ $\color{green}{\textbf{定义 3 }}$ 如果集合 $\{n: n\ge 1, p_{ii}^{(n)}>0\}$
 
 $\color{red}{\textbf{定理 2 }}$ 如果状态 $j,i$同属一类，则 $d(i)=d(j)$。
 
-$\textbf{证明} \quad$ 由类的定义可知 $j \leftrightarrow i$，即存在 $n,m \ge 0$，使得 $p_{ij}^n > 0, p_{ji}^m$，则 $p_{ii}^{n+m} = \sum_{k\in\mathcal{S}} p_{ik}^n p_{ki}^m \ge p_{ij}^n p_{ji}^m >0$。对于所有 $p_{jj}^l >0$的 $l$，有 $p_{ii}^{(n+l+m)} \ge p_{ij}^n p_{jj}^{(l)}  p_{ji}^m >0$。显然 $d(i)$ 应该同时整除 $n+m$ 和 $n+l+m$，则它必定整除 $l$。而 $d(j)$是 $j$ 的周期，所以 $d(i)$必定整除 $d(j)$。反过来亦可证 $d(j)$ 整除 $d(i)$，于是 $d(i) = d(j)$。
+$\textbf{证明} \quad$ 由类的定义可知 $i \leftrightarrow j$，即存在 $m,n \ge 0$，使得 $p_{ij}^{(m)} > 0, p_{ji}^{(n)}>0$，则 $p_{ii}^{(n+m)} = \sum_{k\in\mathcal{S}} p_{ik}^{(m)} p_{ki}^{(n)} \ge p_{ij}^{(m)} p_{ji}^{(n)} >0$。对于所有 $p_{jj}^{(s)} >0$的 $s$，有 $p_{ii}^{(m+s+n)} \ge p_{ij}^{(m)} p_{jj}^{(s)}  p_{ji}^{(n)} >0$。显然 $d(i)$ 应该同时整除 $m+n$ 和 $m+s+n$，则它必定整除 $s$。而 $d(j)$是 $j$ 的周期，所以 $d(i)$必定整除 $d(j)$。反过来亦可证 $d(j)$ 整除 $d(i)$，于是 $d(i) = d(j)$。
 
-### 3.3.3 常返/非常返
+### 3.3.3 常返（Recurrent）/非常返（Transient）
 
-$\color{green}{\textbf{定义 4 }}$ 对于任何状态$i,j$，以 $f_{ij}^{(n)}$ 记录从 $j$ 出发经过 $n$ 步后首次到达 $i$ 的概率。令 $f_{ij} = \sum_{n=1}^{\infty}f_{ij}^{(n)}$，如果 $f_{jj}=1$，则称状态 $j$为常返状态；若 $f_{jj}<1$，则称状态 $j$ 为非常返状态或瞬过状态。
+$\color{green}{\textbf{定义 4 }}$ 对于任何状态$i,j$，以 $f_{ij}^{(n)}$ 记录从 $i$ 出发经过 $n$ 步后首次到达 $j$ 的概率。令 $f_{ij} = \sum_{n=1}^{\infty}f_{ij}^{(n)}$，如果 $f_{jj}=1$，则称状态 $j$为常返状态；若 $f_{jj}<1$，则称状态 $j$ 为非常返状态或瞬过状态。
 
 > 常返与否可以理解为从 $j$ 出发未来某个时刻是否一定能回到 $j$。
 
-### 3.3.4 正常返/零常返
+### 3.3.4 正常返（Positive Recurrent）/零常返（Null Recurrent）
 
 对于常返的状态 $j$，定义
 $$\mu_i = \sum_{n=1}^{\infty} n f_{ii}^{(n)} \tag{16}$$
@@ -217,9 +217,156 @@ $$\mu_1 = 3\times ( 0 + \frac{2}{4} + 0 + \frac{4}{4^2} + 0+ 0+ 0+ \frac{8}{4^3}
 
 ，因此是正常返的。**本质原因还是因为返回的概率增大了。**
 
+
+### 3.3.5 关于上述状态之间的关系
+
+
+$\color{blue}{\textbf{引理 1 }}$ 对于任意状态 $i,j, 1\le n < +\infty$ 有
+$$ f_{ij}^{(n)} = \sum_{k\neq j \land k \in \mathcal{S}} f_{ik}^{(1)}f_{kj}^{(n-1)} \tag{17}$$
+
+$\textbf{证明}\quad$ 当 $n=1$ 时，显然有 $f_{ij}^{(1)} = p_{ij}$，下面考虑 $n>1$的情况。令 $T_{ij}$表示从状态 $i$出发，首次到达状态 $j$的时间。由于 
+$$ \{T_{ij}=n, X_0=i\} =\cup_{k\neq j} \{ X_0=i, X_1 =k, X_l \neq j, 2\le l \le n-1, X_n=j \}$$
+因此有
+$$\begin{split}P(T_{ij}=n|X_0=i) &= \sum_{k\neq j} P(X_1 = k|X_0=i) \times \\
+&P(X_n=j|X_1=k, X_0=i, X_l\neq j, 2\le l\le n-1)\end{split}$$
+由马尔科夫定义，我们可以得到
+$$f_{ij}^{(n)}=\sum_{k\neq j} p_{ik}f_{kj}^{(n-1)}=\sum_{k\neq j}f_{ij}^{(1)}f_{ij}^{(n-1)}  $$
+
+
+$\color{blue}{\textbf{引理 2 }}$ 对于任意状态 $i,j, 1 \le n \le + \infty$，有
+$$ p_{ij}^{(n)} = \sum_{l=1}^n f_{ij}^{(l)} p_{jj}^{(n-l)} \tag{18}$$
+
+$\textbf{证明}\quad$ 根据首次进入法，注意到 $X_n=j$ 时 $T_{ij} \le n$，
+$$\begin{split}
+P_{ij}^{(n)} &= P(X_0=i, X_n=j) = \sum_{l=1}^n P(X_0=i, X_n=j, T_{ij}=l) \\
+&= \sum_{l=1}^n P(X_0=i, X_n=j, X_l=j, X_k\neq j,0<k<l)\\
+&= \sum_{l=1}^n P(X_0=i, X_l=j, X_k \neq j, 0<k<l)P(X_n=j|X_l=j)\\
+&= \sum_{v=1}^n f_{ij}^{(l)}P_{jj}^{(n-l)}
+\end{split}$$
+
+
+从状态 $i$ 出发经过 $r$ 步以概率 $f_{ij}^{(r)}, r\le n$ 首次到达状态 $j$ ，对于 $1 \le r \le n$ 剩下 $n-r$ 步再次到达状态 $j$ 的概率为 $ p_{ii}^{(n-r)} $。对于这些彼此不相容的概率求和，我们可以得到一个重要的关系式：
+$$ p_{ij}^{(n)} = \sum_{r=1}^n f_{ij}^{r} p_{jj}^{(n-r)} \quad n\ge 1 \tag{19}$$
+其中 
+$$f_{ij}^{(0)} = 0 \quad p_{jj}^{(0)}=1 \quad p_{ij}^{0}=0 \quad  f_{ij}^{(1)}=p_{ij} \quad i\neq j \tag{20}$$
+设 $P_{ij}(z)$和 $F_{ij}(z)$分别表示序列 $\{p_{ij}^{(n)}\}$ 和  $\{f_{ij}^{(n)}\}$ 的矩生成函数，那么我们可以得到下式
+$$\begin{split} 
+P_{ij}(z) &= \sum_{n=0}^\infty p_{ij}^{(n)} z^n = p_{ij}^{(0)} + \sum_{n=1}^\infty \sum_{r=1}^n f_{ij}^{(r)} p_{jj}^{(n-r)} z^n \\
+&= p_{ij}^{(0)} + \sum_{r=1}^\infty f_{ij}^{(r)}z^r \sum_{k=0}^\infty p_{jj}^{(k)} z^k = p_{ij}^{(0)} + F_{ij}(z)P_{jj}(z)
+\end{split}\tag{21}$$
+特别地，对于 $i=j$， 我们得到有用的关系式
+$$P_{ii}(z) = 1+ F_{ii}(z)P_{ii}(z) \tag{22} $$
+或
+$$ P_{ii}(z) = \frac{1}{1-F_{ii}(z)} \tag{23}$$
+显然，
+$$f_{ij} = \sum_{n=1}^\infty f_{ij}^{(n)} =F_{ij}(1) \tag{24} $$
+
+
+$\color{blue}{\textbf{引理 3 }}$ 状态 $i$ 是常返的，当且仅当 
+$$\sum_{n=0}^\infty p_{ii}^{(n)} =\infty \tag{25}$$
+
+$\textbf{证明}\quad$ 根据定义，如果状态 $i$ 是常返的，那么 $f_{ii} =\sum_{n=1}^\infty f_{ii}^{(n)} = \lim\limits_{z\rightarrow 1} F_{ii}(z) = 1 $，那么根据公式（23）可得
+$$ \sum_{n=1}^\infty p_{ii}^{(n)} = \lim\limits_{z\rightarrow 1} P_{ii}(z) = \lim\limits_{z\rightarrow 1} \frac{1}{1-F_{ii}(z)} = \infty $$
+
+
+$\color{blue}{\textbf{引理 4 }}$ 状态 $i$ 是非常返的，当且仅当 
+$$\sum_{n=0}^\infty p_{ii}^{(n)} <\infty \tag{26}$$
+若状态 $j$ 是非常返状态，对于所有的状态 $i$， 
+$$\sum_{n=0}^\infty p_{ij}^{(n)} < \infty \tag{27} $$
+
+$\textbf{证明 }\quad$ 假定 $\sum_{n=0}^\infty p_{ii}^{(n)}<\infty $，由于 $p_{ii}^{(n)}$ 非负，当 $z\rightarrow 1$ 时，$P_{ii}(z)$ 单调递增，并且对每一个 $N$
+$$\sum_{n=0}^N p_{ii}^{(n)} \le \lim\limits_{z\rightarrow 1} P_{ii}(z) \le \sum_{n=0}^\infty p_{ii}^{(0)} $$
+因此，当$ N \rightarrow \infty $, 取极限，我们可以得到
+$$\lim\limits_{z\rightarrow 1} P_{ii}^{(n)} = \sum_{n=0}^\infty p_{ii}^{(n)} \lt \infty  $$
+
+对于公式（27），我们利用公式（19）证明：
+$$ \sum_{n=0}^\infty p_{ij}^{(n)} = \sum_{n=0}^\infty \sum_{r=0}^n f_{ij}^{(r)} p_{jj}^{(n-r)} = \sum_{m=0}^\infty p_{jj}^{(m)} \sum_{r=0}^\infty f_{ij}^{(r)} \le \sum_{m=0}^\infty p_{jj}^{(m)} \lt \infty $$
+
+$\color{blue}{\textbf{引理 5 }}$ 当且仅当
+$$ \sum_{n=0}^\infty p_{jj}^{(n)} = \infty \quad \text{并且当} n\rightarrow \infty \text{时，} p_{jj}^{(n)} \rightarrow 0 \tag{28}$$ 
+状态 $j$ 是零常返的，在这种情况下，对所有的 $i$， 
+$$\text{当}n\rightarrow \infty \text{时} \quad p_{ij}^{(n)} \rightarrow 0 \tag{29}$$
+
+
+
+
+$\color{blue}{\textbf{引理 6 }}$ 当且仅当 $\mu_j \lt \infty$ 非周期态 $j$ 是遍历的，在这种情况下：
+$$\lim\limits_{n\rightarrow \infty} p_{ij}^{(n)} \rightarrow \frac{f_{ij}}{\mu_{ij}} \tag{30}$$
+
+$\textbf{证明}\quad$ 为证明引理5 和引理6， 我们定义
+$$v_n = p_{jj}^{(n)} -p_{jj}^{n-1} \quad n\ge 1 \quad, v_0 = p_{jj}^{(0)} $$
+所以，
+$$ \sum_{k=0}^n v_k = p_{jj}^{(n)} $$
+定义 
+$$ V(z) = \sum_{n=0}^\infty v_n z^n = P_{jj}(z) -zP_{jj}(z) = \frac{1-z}{1-F_{jj}(z)} $$
+于是
+$$\lim\limits_{z\rightarrow 1} V(z) = \lim\limits_{z\rightarrow 1} \frac{1}{(1-F_{jj}(z))/(1-z)}=\frac{1}{F_{jj}^{'}(1)} = \frac{1}{\mu_j} $$
+且
+$$\lim\limits_{z\rightarrow 1} V(z) = \lim\limits_{z\rightarrow 1}\sum_{k=0}^\infty v_k z^k = \lim\limits_{n\rightarrow \infty} \sum_{k=0}^{n} v_k = \lim\limits_{n\rightarrow \infty} p_{jj}^{(n)} $$
+因此，我们可以得到
+$$\lim\limits_{n\rightarrow\infty} p_{jj}^{(n)} = \frac{1}{\mu_j}  $$
+引理5中公式（28）得证。
+
+> **步骤解释：**
+> $$\begin{split} 
+> P_{jj}(z) - zP_{jj}(z) &= \{p_{jj}^{(0)}z^0 + p_{jj}^{(1)}z^1 + p_{jj}^{(2)}z^2 + \cdots \} - \{ p_{jj}^{(0)}z^1 + p_{jj}^{(1)}z^2 + p_{jj}^{(2)}z^3 + \cdots \} \\
+&= p_{jj}^{(0)}z^0 + (p_{jj}^{(1)}-p_{jj}^{(0)})z^1 + (p_{jj}^{(2)}-p_{jj}^{(1)})z^2 + \cdots \\
+&= \sum_{n=0}^\infty v_n z^n
+>\end{split}$$
+
+
+接下来证明引理5中公式（29）。根据公式（19），我们可以得到
+$$\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} = \lim\limits_{n\rightarrow\infty}\sum_{k=1}^n f_{ij}^{(k)}p_{jj}^{(n-k)} = \sum_{k=1}^\infty \frac{f_{ij}^{(k)}}{\mu_j} = \frac{f_{ij}}{\mu_j}  $$
+如果 $j$ 是零常返状态，那么 $\mu_j = \infty$，所以 
+$$\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} \rightarrow 0 $$
+因此，引理5中公式（29）得证。
+
+接下来证明引理6。如果状态 $j$ 是非周期的常返遍历态，那么根据定义 $\mu_j \lt \infty$，且根据引理5， 当 $n\rightarrow \infty$ 时， $p_{JJ}^{(n)}$ 趋于一个非零常数，因此 $\lim\limits_{n\rightarrow\infty} \sum_{k=0}^n p_{jj}^{(n)} = \infty$，从而状态 $j$ 是常返和遍历的，因而证明了引理6.
+
+
+$\color{blue}{\textbf{引理 7 }}$ 设状态 $j$ 是周期为 $T$ 的常返状态，那么
+$$p_{jj}^{(nd)} \rightarrow \frac{d}{\mu_j} \tag{31}$$
+
+$\textbf{证明}\quad$ 状态 $j$ 是周期为 $d$ 的，除非 $n$ 是周期 $d$ 的整数倍，否则 $f_{jj}^{(n)}=0$，因此$F_{ii}(z)$ 仅包含 $z^d$ 的幂。设
+$$F_{jj}(z) = \varphi(z^d) $$
+所以，根据公式（23），我们可以得到
+$$P_{jj}(z) = \frac{1}{1-\varphi(z^d)} $$
+或
+$$ P_{jj}(z^{1/d}) = \frac{1}{1-\varphi(z)} = \sum_{n=0}^\infty p_{jj}^{(nd)}z^n $$
+且用类似于引理5证明方式中的推理，我们可以得到
+$$p_{ij}^{nT} \rightarrow \frac{1}{\varphi^{'}(1)} = \frac{T}{F^{'}_{jj}(1)} = \frac{T}{\mu_j} $$
+
+
 ### 3.4 平稳分布
 
-$\color{blue}{\textbf{推论 1 }}$
+$\color{green}{\textbf{定义 6 }}$ 对于Markov链，概率分布 $\{p_j, j \in \mathcal{S}\}$ 称为平稳分布，如果
+$$p_j = \sum_{i\in\mathcal{S}} p_i p_{ij} \tag{32}$$
+可以理解为，对于 $(t-1)$ 时刻的概率分布 $\pi(t-1)$，通过概率转移矩阵 $\pi(t)=\mathbf{P}\pi(t-1)$ 计算得到新的概率分布，如果 $\pi(t)=\pi(t-1)$，则称为是平稳分布。
+
+$\color{green}{\textbf{定义 7 }}$ 对于不可约非周期的马尔可夫链：
+
+(1) 若它是遍历的，则 $\pi_j = \lim\limits_{n\rightarrow\infty} p_{jj}^{(n)} >0 (j\in\mathcal{S}) $ 是唯一的平稳分布
+
+(2) 若状态都是瞬过的或者全为零常返的，则平稳分布不存在。
+
+$\textbf{证明}\quad$ 对于第（1）条定理，对于遍历的Markov链，根据引理6可知 $\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} \ge 0 $ 存在，记为 $\pi_j$。首先证明 $\{\pi_j, j\in\mathcal{S}\}$ 是平稳分布。
+
+由于 $\sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $，则有 $\lim\limits_{n\rightarrow\infty} \sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $，因此可以得到 $\sum_{j\in\mathcal{S}}\pi_j=1$。
+
+利用C-K方程，可以得到 $p_{ij}^{(n+1)} = \sum_{k\in\mathcal{S}} p_{ik}^{(n)} p_{kj} $。两遍取极限可以得到
+$$\lim\limits_{n\rightarrow\infty}p_{ij}^{(n+1)} = \lim\limits_{n\rightarrow\infty}\sum_{k\in\mathcal{S}} p_{ik}^{(n)}p_{kj} = \sum_{k\in\mathcal{S}}\left[\lim\limits_{n\rightarrow\infty} p_{ik}^{(n)} \right] p_{kj} $$
+因此可以得到 $\pi_j = \sum_{k\in\mathcal{S}} \pi_k p_{kj}$，因此 $\{\pi_j, j\in\mathcal{S}\}$ 是平稳分布。
+
+再证明 $\{\pi_j, j\in\mathcal{S}\}$  是唯一的平稳分布。假设还有另外一个平稳分布 $\{\tilde{\pi}_j, j\in\mathcal{S}\}$，则根据  $\tilde{pi}_j = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}$ 归纳可以得到
+$$\tilde{pi}_j = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}^{(n)}, \quad n=1,2,\cdots$$
+令 $n\rightarrow\infty$，对上式两端取极限，可以得到
+$$\tilde{\pi}_j = \sum_{i\in\mathcal{S}} \tilde{\pi}_i \lim\limits_{\rightarrow\infty} p_{ij}^{(n)} = \sum_{i\in\mathcal{S}} \tilde{\pi}_i\pi_j $$
+因为 $\sum_{i\in\mathcal{S}} \tilde{\pi}_i = 1 $，所以 $\tilde{\pi}_j = \pi_j$，得证平稳分布唯一。
+
+对于第（2）条定理，假设存在一个平稳分布 $\{\pi_j, j\in\mathcal{S} \}$，则根据（1）中的证明可知，
+$$ \pi_j \sum_{i\in\mathcal{S}} \pi_i p_{ij}^{(n)}, \quad n=1,2,\cdots $$
+成立，令 $n\rightarrow \infty$ 知道 $p_{ij}^{(n)}\rightarrow 0$，则可以推导出 $\pi_j = 0 (j\in \mathcal{S})$，这是不可能的。因此对于非常返或零常返的Markov链不存在平稳分布。
+
 
 # 4 Markov Chain and Monte Carlo
 
@@ -336,7 +483,7 @@ $$\begin{split}
 \end{split}$$
 上式是用到了 $p(x_{-j}) = p(x^{'}_{-j})$ 和 $p(\cdot | x_{-j}) = p(\cdot|x^{'}_{-j})$，注意，这里的点表示的是当二者任意一致时成立。
 转移核就是满条件概率分布
-$$p(\mathbf{x}, \mathbf{x}^{'}) = p(x^{'}_j|x_{-j}) $$。
+$$p(\mathbf{x}, \mathbf{x}^{'}) = p(x^{'}_j|x_{-j})$$
 
 
 
