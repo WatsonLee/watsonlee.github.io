@@ -294,7 +294,7 @@ $\color{blue}{\textbf{引理 6 }}$ 当且仅当 $\mu_j \lt \infty$ 非周期态 
 $$\lim\limits_{n\rightarrow \infty} p_{ij}^{(n)} \rightarrow \frac{f_{ij}}{\mu_{ij}} \tag{30}$$
 
 $\textbf{证明}\quad$ 为证明引理5 和引理6， 我们定义
-$$v_n = p_{jj}^{(n)} -p_{jj}^{n-1} \quad n\ge 1 \quad, v_0 = p_{jj}^{(0)} $$
+$$v_n = p_{jj}^{(n)} -p_{jj}^{(n-1)} \quad n\ge 1 \quad, v_0 = p_{jj}^{(0)} $$
 所以，
 $$ \sum_{k=0}^n v_k = p_{jj}^{(n)} $$
 定义 
@@ -307,12 +307,16 @@ $$\lim\limits_{z\rightarrow 1} V(z) = \lim\limits_{z\rightarrow 1}\sum_{k=0}^\in
 $$\lim\limits_{n\rightarrow\infty} p_{jj}^{(n)} = \frac{1}{\mu_j}  $$
 引理5中公式（28）得证。
 
-> **步骤解释：**
+> **步骤解释1：**
 > $$\begin{split} 
 > P_{jj}(z) - zP_{jj}(z) &= \{p_{jj}^{(0)}z^0 + p_{jj}^{(1)}z^1 + p_{jj}^{(2)}z^2 + \cdots \} - \{ p_{jj}^{(0)}z^1 + p_{jj}^{(1)}z^2 + p_{jj}^{(2)}z^3 + \cdots \} \\
 &= p_{jj}^{(0)}z^0 + (p_{jj}^{(1)}-p_{jj}^{(0)})z^1 + (p_{jj}^{(2)}-p_{jj}^{(1)})z^2 + \cdots \\
 &= \sum_{n=0}^\infty v_n z^n
 >\end{split}$$
+
+> **步骤解释2:**
+> 根据导数定义
+> $$F^{'}(1)=\lim\limits_{z\rightarrow 1^-} \frac{F_{jj}(1)-F_{jj}(z)}{1-z^-}$$
 
 
 接下来证明引理5中公式（29）。根据公式（19），我们可以得到
@@ -333,11 +337,32 @@ $$F_{jj}(z) = \varphi(z^d) $$
 $$P_{jj}(z) = \frac{1}{1-\varphi(z^d)} $$
 或
 $$ P_{jj}(z^{1/d}) = \frac{1}{1-\varphi(z)} = \sum_{n=0}^\infty p_{jj}^{(nd)}z^n $$
-且用类似于引理5证明方式中的推理，我们可以得到
+且用类似于引理5证明方式中的推理，我们可以定义
+$$v_n = p_{jj}^{(nd)} - p_{jj}^{((n-1)d)} $$
+且可以得到 $\sum_{k=0}^n v_k = p_{jj}^{(nd)} $，令
+$$ \begin{split}
+V(z) &= \sum_{n=0}^\infty v_n z^n =P_{jj}(z) - zP_{jj}(z) \\
+&=\frac{1}{1-\varphi({z^d})} - \frac{z}{1-\varphi(z^d)} \\
+&= \frac{1-z}{1-\varphi(z^d)}
+\end{split}$$
+于是
+$$\begin{split} 
+\lim\limits_{z\rightarrow 1} V(z) &= \lim\limits_{z\rightarrow 1} \frac{1-z}{1-\varphi(z^d)} \cdot \frac{1-z^d}{1-z^d} = \lim\limits_{z\rightarrow 1} \frac{1-z^d}{1-\varphi(z^d)} \cdot \frac{1-z}{1-z^d} \\
+&= \lim\limits_{z\rightarrow 1} \frac{1}{(1-\varphi(z^d))/(1-z^d)} \cdot \frac{1}{(1-z^d)/(1-z)} \\
+&= \lim\limits_{z\rightarrow 1} \frac{1}{\varphi^{'}(z^d)\cdot (\partial z^d)/(\partial z)} = \lim\limits_{z\rightarrow 1} \frac{1}{\varphi^{'}(z)}
+\end{split}$$
+对 $F_{jj}(z) = \varphi(z^d)$ 做变换，得到  $F_{jj}(z^{\frac{1}{d}}) = \varphi(z)$  两边求导，得到
+$$ F_{jj}^{'} (z^{\frac{1}{d}}) \cdot \frac{1}{d} z^{\frac{1}{d} - 1} = \varphi^{'} (z) $$
+带回公式，我们可以得到
+$$\begin{split}
+\lim\limits_{z\rightarrow 1} V(z) &= \lim\limits_{z\rightarrow 1} \sum_{n=0}^\infty v_n z^n = \lim\limits_{z\rightarrow 1} \sum_{k=0}^n v_k = \lim\limits_{z\rightarrow 1} p_{jj}^{(nd)} \\
+&= \lim\limits_{z\rightarrow 1} \frac{1}{\varphi^{'}(z)} = \lim\limits_{z\rightarrow 1} \frac{d}{F_{jj}^{'}(z)}
+\end{split}$$
+因此，引理7的证
 $$p_{ij}^{nT} \rightarrow \frac{1}{\varphi^{'}(1)} = \frac{T}{F^{'}_{jj}(1)} = \frac{T}{\mu_j} $$
 
 
-### 3.4 平稳分布
+## 3.4 平稳分布
 
 $\color{green}{\textbf{定义 6 }}$ 对于Markov链，概率分布 $\{p_j, j \in \mathcal{S}\}$ 称为平稳分布，如果
 $$p_j = \sum_{i\in\mathcal{S}} p_i p_{ij} \tag{32}$$
@@ -361,7 +386,7 @@ $$\lim\limits_{n\rightarrow\infty}p_{ij}^{(n+1)} = \lim\limits_{n\rightarrow\inf
 $$\tilde{pi}_j = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}^{(n)}, \quad n=1,2,\cdots$$
 令 $n\rightarrow\infty$，对上式两端取极限，可以得到
 $$\tilde{\pi}_j = \sum_{i\in\mathcal{S}} \tilde{\pi}_i \lim\limits_{\rightarrow\infty} p_{ij}^{(n)} = \sum_{i\in\mathcal{S}} \tilde{\pi}_i\pi_j $$
-因为 $\sum_{i\in\mathcal{S}} \tilde{\pi}_i = 1 $，所以 $\tilde{\pi}_j = \pi_j$，得证平稳分布唯一。
+因为 $\sum_{i\in\mathcal{S}} \tilde{\pi}_{i} = 1$，所以 $\tilde{\pi}_j = \pi_j$，得证平稳分布唯一。
 
 对于第（2）条定理，假设存在一个平稳分布 $\{\pi_j, j\in\mathcal{S} \}$，则根据（1）中的证明可知，
 $$ \pi_j \sum_{i\in\mathcal{S}} \pi_i p_{ij}^{(n)}, \quad n=1,2,\cdots $$
@@ -391,7 +416,7 @@ q(\mathbf{x}^{'}, \mathbf{x}) \frac{p(\mathbf{'})}{p(\mathbf{x})}, \quad & p(\ma
 \end{cases}$$
 个人理解，之所以要加入 $\min$ 限制，是因为转移核作为概率值要始终不超过1。
 
-$\color{red}{\textbf{定理 X }}$ 通过上述方式构造的马尔可夫链是可逆的，即
+$\color{red}{\textbf{定理 3 }}$ 通过上述方式构造的马尔可夫链是可逆的，即
 $$p(\mathbf{x})p(\mathbf{x}, \mathbf{x}^{'}) = p(\mathbf{x}^{'})p(\mathbf{x}^{'}, \mathbf{x})$$
 且 $p(\mathbf{x})$ 是该马尔可夫链的平稳分布。
 
@@ -489,8 +514,9 @@ $$p(\mathbf{x}, \mathbf{x}^{'}) = p(x^{'}_j|x_{-j})$$
 
 # 参考
 
-1. [统计机器学习](www.baidu,com)
-2. [应用随机过程](www.douban.com)
-3. [白板推导](www.bilibili.com)
+1. [李航，统计机器学习（第2版），清华大学出版社](http://www.tup.tsinghua.edu.cn/booksCenter/book_08132901.html)
+2. [张波，应用随机过程（第5版），中国人民大学出版社](http://www.crup.com.cn/Book/TextDetail?doi=1520e7e7-ac46-40b9-9864-1a917d9677dc)
+3. [帕普里斯（著），保铮（译），概率、随机变量与随机过程（第4版），西安交通大学出版社](https://baike.baidu.com/item/%E6%A6%82%E7%8E%87%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E4%B8%8E%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/56914646?fr=aladdin)
+3. [白板推导](https://space.bilibili.com/97068901)
 4. [如何理解马尔科夫链中的常返态，非常返态，零常返，正常反，周期和非周期，有什么直观意义？ - uplow的回答 - 知乎](https://www.zhihu.com/question/46539491/answer/263442039)
 5. [如何理解马尔科夫链中的常返态，非常返态，零常返，正常反，周期和非周期，有什么直观意义？ - LittleHealth的回答 - 知乎](https://www.zhihu.com/question/46539491/answer/2177451474)
