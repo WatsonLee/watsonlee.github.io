@@ -24,7 +24,7 @@
 <meta property="og:description" content="Karush-Kuhn-Tucker（KKT）条件是非线性规划最佳解的必要条件。KKT条件将Lagrange乘数法所涉及到的等式约束优化问题推广至不等式。在实际应用上，KKT条件一般不存在代数解。许多优化算法可提供数值计算选用。 1. 原始问题 1.1 等式约束优化问题  给定一个目标函数 $f:^n  $，我们希望找到 \(\mathbf{x}\in \mathbb{R}^n\)，在满足约束条件">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-18T04:09:33.000Z">
-<meta property="article:modified_time" content="2022-11-18T15:58:54.000Z">
+<meta property="article:modified_time" content="2022-11-22T15:15:33.072Z">
 <meta property="article:author" content="Huacheng Li">
 <meta property="article:tag" content="约束优化">
 <meta property="article:tag" content="最优化">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.6k words
+          8.8k words
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          72 mins
+          74 mins
         
       </span>
     
@@ -328,6 +328,13 @@ f(\mathbf{x}), \quad &amp; \mathbf{x} \text{满足原始问题约束}\\
 &amp;\max\limits_{\alpha, \beta} \theta_D(\alpha, \beta) = \max\limits_{\alpha, \beta}\min\limits_{\mathbf{x}} L(\mathbf{x}, \alpha, \beta) \\
 &amp;\text{s.t.} \quad \alpha_i \ge 0, \quad i=1,2,\ldots,k
 \end{split}\tag{15}\]</span> 上式被称为原始问题的对偶问题，定义对偶问题的最优值 <span class="math display">\[d^* = \max\limits_{\alpha, \beta; \alpha_i \ge 0} \theta_D (\alpha, \beta) \tag{16}\]</span> 为对偶问题的值。</p>
+<blockquote>
+<p><strong>为什么要引入对偶问题？</strong></p>
+<ul>
+<li><p>对偶问题交换了求极值的顺序，先求解的是函数 <span class="math inline">\(f(\mathbf{x})\)</span> 的极小值（自变量为 <span class="math inline">\(\mathbf{x}\)</span> ），等价成梯度为0的约束条件，并将难以求解的约束条件扔到目标函数的位置上去。</p></li>
+<li><p>在定义域为凸集的前提下，转换后的对偶问题的自变量是约束条件系数构成的线性函数，一定是凸问题。</p></li>
+</ul>
+</blockquote>
 <h1 id="原问题与对偶问题之间的关系">3. 原问题与对偶问题之间的关系</h1>
 <blockquote>
 <p><strong>定理1:</strong> 如果原始问题和对偶问题都有最优值，则 <span class="math display">\[d^* = \max\limits_{\alpha, \beta;\alpha_i \ge 0} \min\limits_{\mathbf{x}} L(\mathbf{x}, \alpha, \beta) \le \min\limits_{\mathbf{x}}\max\limits_{\alpha, \beta;\alpha_i \ge 0} L(\mathbf{x}, \alpha, \beta) = p^* \tag{17} \]</span></p>
@@ -479,6 +486,12 @@ f(\mathbf{x}^*) &amp;= \theta_D(\alpha^*, \beta^*) \\
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/11/20/MCMC/" title="蒙特卡罗采样">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">蒙特卡罗采样</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
