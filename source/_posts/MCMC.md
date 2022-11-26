@@ -265,7 +265,9 @@ $$f_{ij} = \sum_{n=1}^\infty f_{ij}^{(n)} =F_{ij}(1) \tag{24} $$
 $\color{blue}{\textbf{引理 3 }}$ 状态 $i$ 是常返的，当且仅当 
 $$\sum_{n=0}^\infty p_{ii}^{(n)} =\infty \tag{25}$$
 
-$\textbf{证明}\quad$ 根据定义，如果状态 $i$ 是常返的，那么 $f_{ii} =\sum_{n=1}^\infty f_{ii}^{(n)} = \lim\limits_{z\rightarrow 1} F_{ii}(z) = 1 $，那么根据公式（23）可得
+$\textbf{证明}\quad$ 根据定义，如果状态 $i$ 是常返的，那么 
+$$f_{ii}=\sum_{n=1}^{\infty} f_{ii}^{(n)} = \lim\limits_{z\rightarrow 1} F_{ii}(z) = 1$$
+那么根据公式（23）可得
 $$ \sum_{n=1}^\infty p_{ii}^{(n)} = \lim\limits_{z\rightarrow 1} P_{ii}(z) = \lim\limits_{z\rightarrow 1} \frac{1}{1-F_{ii}(z)} = \infty $$
 
 
@@ -274,7 +276,9 @@ $$\sum_{n=0}^\infty p_{ii}^{(n)} <\infty \tag{26}$$
 若状态 $j$ 是非常返状态，对于所有的状态 $i$， 
 $$\sum_{n=0}^\infty p_{ij}^{(n)} < \infty \tag{27} $$
 
-$\textbf{证明 }\quad$ 假定 $\sum_{n=0}^\infty p_{ii}^{(n)}<\infty $，由于 $p_{ii}^{(n)}$ 非负，当 $z\rightarrow 1$ 时，$P_{ii}(z)$ 单调递增，并且对每一个 $N$
+$\textbf{证明 }\quad$ 假定 
+$$\sum_{n=0}^\infty p_{ii}^{(n)}<\infty $$
+由于 $p_{ii}^{(n)}$ 非负，当 $z\rightarrow 1$ 时，$P_{ii}(z)$ 单调递增，并且对每一个 $N$
 $$\sum_{n=0}^N p_{ii}^{(n)} \le \lim\limits_{z\rightarrow 1} P_{ii}(z) \le \sum_{n=0}^\infty p_{ii}^{(0)} $$
 因此，当$ N \rightarrow \infty $, 取极限，我们可以得到
 $$\lim\limits_{z\rightarrow 1} P_{ii}^{(n)} = \sum_{n=0}^\infty p_{ii}^{(n)} \lt \infty  $$
@@ -339,7 +343,7 @@ $$P_{jj}(z) = \frac{1}{1-\varphi(z^d)} $$
 $$ P_{jj}(z^{1/d}) = \frac{1}{1-\varphi(z)} = \sum_{n=0}^\infty p_{jj}^{(nd)}z^n $$
 且用类似于引理5证明方式中的推理，我们可以定义
 $$v_n = p_{jj}^{(nd)} - p_{jj}^{((n-1)d)} $$
-且可以得到 $\sum_{k=0}^n v_k = p_{jj}^{(nd)} $，令
+且可以得到 $$ \sum_{k=0}^{n} v_k = p_{jj}^{(nd)} $$，令
 $$ \begin{split}
 V(z) &= \sum_{n=0}^\infty v_n z^n =P_{jj}(z) - zP_{jj}(z) \\
 &=\frac{1}{1-\varphi({z^d})} - \frac{z}{1-\varphi(z^d)} \\
@@ -370,15 +374,16 @@ $$p_j = \sum_{i\in\mathcal{S}} p_i p_{ij} \tag{32}$$
 
 $\color{green}{\textbf{定义 7 }}$ 对于不可约非周期的马尔可夫链：
 
-(1) 若它是遍历的，则 $\pi_j = \lim\limits_{n\rightarrow\infty} p_{jj}^{(n)} >0 (j\in\mathcal{S}) $ 是唯一的平稳分布
+(1) 若它是遍历的，则存在以下唯一的平稳分布 
+$$\pi_j = \lim\limits_{n\rightarrow\infty} p_{jj}^{(n)} >0 (j\in\mathcal{S}) $$ 
 
 (2) 若状态都是瞬过的或者全为零常返的，则平稳分布不存在。
 
-$\textbf{证明}\quad$ 对于第（1）条定理，对于遍历的Markov链，根据引理6可知 $\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} \ge 0 $ 存在，记为 $\pi_j$。首先证明 $\{\pi_j, j\in\mathcal{S}\}$ 是平稳分布。
+$\textbf{证明}\quad$ 对于第（1）条定理，对于遍历的Markov链，根据引理6可知 $$\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} \ge 0 $$ 存在，记为 $\pi_j$。首先证明 $\{\pi_j, j\in\mathcal{S}\}$ 是平稳分布。
 
-由于 $\sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $，则有 $\lim\limits_{n\rightarrow\infty} \sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $，因此可以得到 $\sum_{j\in\mathcal{S}}\pi_j=1$。
+由于 $$\sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $$，则有 $$\lim\limits_{n\rightarrow\infty} \sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 $$，因此可以得到 $\sum_{j\in\mathcal{S}}\pi_j=1$。
 
-利用C-K方程，可以得到 $p_{ij}^{(n+1)} = \sum_{k\in\mathcal{S}} p_{ik}^{(n)} p_{kj} $。两遍取极限可以得到
+利用C-K方程，可以得到 $$p_{ij}^{(n+1)} = \sum_{k\in\mathcal{S}} p_{ik}^{(n)} p_{kj} $$。两边取极限可以得到
 $$\lim\limits_{n\rightarrow\infty}p_{ij}^{(n+1)} = \lim\limits_{n\rightarrow\infty}\sum_{k\in\mathcal{S}} p_{ik}^{(n)}p_{kj} = \sum_{k\in\mathcal{S}}\left[\lim\limits_{n\rightarrow\infty} p_{ik}^{(n)} \right] p_{kj} $$
 因此可以得到 $\pi_j = \sum_{k\in\mathcal{S}} \pi_k p_{kj}$，因此 $\{\pi_j, j\in\mathcal{S}\}$ 是平稳分布。
 
@@ -458,7 +463,7 @@ $\quad$ （b） 计算接受概率 $\alpha(\mathbf{x}, \mathbf{x}^{'}) = \min \l
 
 $\quad$ （c）从区间（0，1）中按照均匀分布随机抽取一个数 $u$，如果 $u \le \alpha(\mathbf{x}, \mathbf{x}^{'})$，则状态 $\mathbf{x}_i = \mathbf{x}^{'}$，否则 $\mathbf{x}_i = \mathbf{x}$
 
-（3）得到样本集合 $\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}
+（3）得到样本集合 $\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}$
 
 计算 $$f_{mn} = \frac{1}{n-m} \sum_{i=m+1}^n f(\mathbf{x}_i)$$
 
@@ -487,11 +492,11 @@ $\quad$ 1) 由满条件分布 $p(x_1|x^{(i-1)}_2, \cdots, x^{(i-1)}_k)$ 抽取 $
 
 $\quad \quad \vdots$
 
-$\quad$ j) 由满条件分布 $ p(x_j|x^{(i)}_1, \cdots, x^{(i)}_{j-1}, x^{(i-1)}_{j+1}, \cdots, x^{(i-1)}_k ) $ 抽取 $x^{(i)}_j$
+$\quad$ j) 由满条件分布 $p(x_j|x^{(i)}_1, \cdots, x^{(i)}_{j-1}, x^{(i-1)}_{j+1}, \cdots, x^{(i-1)}_k)$ 抽取 $x^{(i)}_j$
 
 $\quad \quad \vdots$
 
-$\quad$ k) 由满条件分布 $ p(x_k|x^{(i)}_1, \cdots, x^{(i)}_{k-1}) $ 抽取 $x^{(i)}_k$
+$\quad$ k) 由满条件分布 $p(x_k|x^{(i)}_1, \cdots, x^{(i)}_{k-1})$ 抽取 $x^{(i)}_k$
 
 得到第 $i$ 次的迭代值 $\mathbf{x}^{(i)} = (x^{(i)}_1, x^{(i)}_2, \cdots, x^{(i)}_k)^T$
 
