@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://watsonlee.github.io/2022/11/20/MCMC/StateClass.png">
 <meta property="og:image" content="http://watsonlee.github.io/2022/11/20/MCMC/PosRecurrent.png">
 <meta property="article:published_time" content="2022-11-20T09:22:57.000Z">
-<meta property="article:modified_time" content="2022-11-26T07:21:02.800Z">
+<meta property="article:modified_time" content="2023-03-05T16:33:46.808Z">
 <meta property="article:author" content="Huacheng Li">
 <meta property="article:tag" content="采样算法">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          22k words
+          23k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          187 mins
+          189 mins
         
       </span>
     
@@ -317,7 +317,9 @@
 </figure>
 <p>接受-拒绝采样的核心思想是对于难以直接采样的分布 <span class="math inline">\(p(\mathbf{z})\)</span>， 构造易于采样的 proposal distribution （建议分布） <span class="math inline">\(q(\mathbf{z})\)</span>，使得 <span class="math inline">\(kq(\mathbf{z})\)</span> 处处不小于 <span class="math inline">\(p(\mathbf{z})\)</span>。采样时，如果采到的样本位于灰色阴影区域，就拒绝，否则接受。我们可以定义接受率 <span class="math inline">\(\alpha=\frac{p(\mathbf{z}^{(i)})}{kq(\mathbf{z}^{(i)})}\)</span>，接受率 <span class="math inline">\(\alpha \in [0,1]\)</span>。</p>
 <p>具体采样步骤如下：</p>
-<p>1). 从分布<span class="math inline">\(q\)</span>中采样出样本 <span class="math inline">\(\mathbf{z}^{(i)}\)</span> 2). 从均匀分布 <span class="math inline">\(U(0,1)\)</span> 中采样 <span class="math inline">\(u_i\)</span> 3). 如果 <span class="math inline">\(u_i \le \alpha\)</span> 接受样本，否则拒绝</p>
+<p>1). 从分布<span class="math inline">\(q\)</span>中采样出样本 <span class="math inline">\(\mathbf{z}^{(i)}\)</span></p>
+<p>2). 从均匀分布 <span class="math inline">\(U(0,1)\)</span> 中采样 <span class="math inline">\(u_i\)</span></p>
+<p>3). 如果 <span class="math inline">\(u_i \le \alpha\)</span> 接受样本，否则拒绝</p>
 <p>我们可以看出，建议分布 <span class="math inline">\(q\)</span> 越接近 <span class="math inline">\(p\)</span>， 接受率越高。该方法存在的主要问题在于一是合适的q(x)分布比较难以找到，二是很难确定一个合理的 k 值。这两个问题会导致拒绝率很高，无用计算增加。</p>
 <h2 id="重要性采样">2.3 重要性采样</h2>
 <p>重要性采样不是从概率分布中采样，而是从期望中采样。根据公式（1），我们可以做如下变换： <span class="math display">\[\begin{split}
@@ -469,16 +471,16 @@ V(z) &amp;= \sum_{n=0}^\infty v_n z^n =P_{jj}(z) - zP_{jj}(z) \\
 <p><span class="math inline">\(\textbf{证明}\quad\)</span> 对于第（1）条定理，对于遍历的Markov链，根据引理6可知 <span class="math display">\[\lim\limits_{n\rightarrow\infty} p_{ij}^{(n)} \ge 0 \]</span> 存在，记为 <span class="math inline">\(\pi_j\)</span>。首先证明 <span class="math inline">\(\{\pi_j, j\in\mathcal{S}\}\)</span> 是平稳分布。</p>
 <p>由于 <span class="math display">\[\sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 \]</span>，则有 <span class="math display">\[\lim\limits_{n\rightarrow\infty} \sum_{j\in\mathcal{S}} p_{ij}^{(n)} =1 \]</span>，因此可以得到 <span class="math inline">\(\sum_{j\in\mathcal{S}}\pi_j=1\)</span>。</p>
 <p>利用C-K方程，可以得到 <span class="math display">\[p_{ij}^{(n+1)} = \sum_{k\in\mathcal{S}} p_{ik}^{(n)} p_{kj} \]</span>。两边取极限可以得到 <span class="math display">\[\lim\limits_{n\rightarrow\infty}p_{ij}^{(n+1)} = \lim\limits_{n\rightarrow\infty}\sum_{k\in\mathcal{S}} p_{ik}^{(n)}p_{kj} = \sum_{k\in\mathcal{S}}\left[\lim\limits_{n\rightarrow\infty} p_{ik}^{(n)} \right] p_{kj} \]</span> 因此可以得到 <span class="math inline">\(\pi_j = \sum_{k\in\mathcal{S}} \pi_k p_{kj}\)</span>，因此 <span class="math inline">\(\{\pi_j, j\in\mathcal{S}\}\)</span> 是平稳分布。</p>
-<p>再证明 <span class="math inline">\(\{\pi_j, j\in\mathcal{S}\}\)</span> 是唯一的平稳分布。假设还有另外一个平稳分布 <span class="math inline">\(\{\tilde{\pi}_j, j\in\mathcal{S}\}\)</span>，则根据 <span class="math inline">\(\tilde{pi}_j = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}\)</span> 归纳可以得到 <span class="math display">\[\tilde{pi}_j = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}^{(n)}, \quad n=1,2,\cdots\]</span> 令 <span class="math inline">\(n\rightarrow\infty\)</span>，对上式两端取极限，可以得到 <span class="math display">\[\tilde{\pi}_j = \sum_{i\in\mathcal{S}} \tilde{\pi}_i \lim\limits_{\rightarrow\infty} p_{ij}^{(n)} = \sum_{i\in\mathcal{S}} \tilde{\pi}_i\pi_j \]</span> 因为 <span class="math inline">\(\sum_{i\in\mathcal{S}} \tilde{\pi}_{i} = 1\)</span>，所以 <span class="math inline">\(\tilde{\pi}_j = \pi_j\)</span>，得证平稳分布唯一。</p>
+<p>再证明 <span class="math inline">\(\{\pi_j, j\in\mathcal{S}\}\)</span> 是唯一的平稳分布。假设还有另外一个平稳分布 <span class="math inline">\(\{\tilde{\pi}_j, j\in\mathcal{S}\}\)</span>，则根据 <span class="math inline">\(\tilde{p}_{ij} = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}\)</span> 归纳可以得到 <span class="math display">\[\tilde{p}_{ij} = \sum_{k\in\mathcal{S}} \tilde{\pi}_k p_{kj}^{(n)}, \quad n=1,2,\cdots\]</span> 令 <span class="math inline">\(n\rightarrow\infty\)</span>，对上式两端取极限，可以得到 <span class="math display">\[\tilde{\pi}_j = \sum_{i\in\mathcal{S}} \tilde{\pi}_i \lim\limits_{\rightarrow\infty} p_{ij}^{(n)} = \sum_{i\in\mathcal{S}} \tilde{\pi}_i\pi_j \]</span> 因为 <span class="math inline">\(\sum_{i\in\mathcal{S}} \tilde{\pi}_{i} = 1\)</span>，所以 <span class="math inline">\(\tilde{\pi}_j = \pi_j\)</span>，得证平稳分布唯一。</p>
 <p>对于第（2）条定理，假设存在一个平稳分布 <span class="math inline">\(\{\pi_j, j\in\mathcal{S} \}\)</span>，则根据（1）中的证明可知， <span class="math display">\[ \pi_j \sum_{i\in\mathcal{S}} \pi_i p_{ij}^{(n)}, \quad n=1,2,\cdots \]</span> 成立，令 <span class="math inline">\(n\rightarrow \infty\)</span> 知道 <span class="math inline">\(p_{ij}^{(n)}\rightarrow 0\)</span>，则可以推导出 <span class="math inline">\(\pi_j = 0 (j\in \mathcal{S})\)</span>，这是不可能的。因此对于非常返或零常返的Markov链不存在平稳分布。</p>
 <h1 id="markov-chain-and-monte-carlo">4 Markov Chain and Monte Carlo</h1>
 <h2 id="核心思想基于采样的随机近似方法">4.1 核心思想:基于采样的随机近似方法</h2>
-<p>在随机变量 <span class="math inline">\(\mathbf{x}\)</span> 的状态空间 <span class="math inline">\(\mathcal{S}\)</span> 上定义一个满足遍历定理的马尔可夫链 <span class="math inline">\(\mathbf{X}=\{\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_t, \cdots\}\)</span>，使其平稳分布就是抽样的目标分布 <span class="math inline">\(p(\mathbf{x})\)</span>。这样当时间趋于无穷时，样本分布趋近于平稳分布，样本的函数值的均值趋近于函数的数学期望。所以，当时间足够长时（时刻大于某个正整数 <span class="math inline">\(m\)</span>）zhihou de shijian (时刻小于某个正整数 <span class="math inline">\(n\)</span>, <span class="math inline">\(n&gt;m\)</span>)里随机游走得到的样本集合 <span class="math inline">\(\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}\)</span> 就是目标概率分布的抽样结果，得到的函数均值就是要计算的数学期望： <span class="math display">\[\hat{\mathbf{E}}[f(\mathbf{x})] = \frac{1}{n-m} \sum_{i=m+1}^n f(\mathbf{x}_i)\]</span> 到时刻 <span class="math inline">\(m\)</span> 为止的时间段被称为燃烧期。</p>
+<p>在随机变量 <span class="math inline">\(\mathbf{x}\)</span> 的状态空间 <span class="math inline">\(\mathcal{S}\)</span> 上定义一个满足遍历定理的马尔可夫链 <span class="math inline">\(\mathbf{X}=\{\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_t, \cdots\}\)</span>，使其平稳分布就是抽样的目标分布 <span class="math inline">\(p(\mathbf{x})\)</span>。这样当时间趋于无穷时，样本分布趋近于平稳分布，样本的函数值的均值趋近于函数的数学期望。所以，当时间足够长时（时刻大于某个正整数 <span class="math inline">\(m\)</span>）之后的时间 (时刻小于某个正整数 <span class="math inline">\(n\)</span>, <span class="math inline">\(n&gt;m\)</span>)里随机游走得到的样本集合 <span class="math inline">\(\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}\)</span> 就是目标概率分布的抽样结果，得到的函数均值就是要计算的数学期望： <span class="math display">\[\hat{\mathbf{E}}[f(\mathbf{x})] = \frac{1}{n-m} \sum_{i=m+1}^n f(\mathbf{x}_i)\]</span> 到时刻 <span class="math inline">\(m\)</span> 为止的时间段被称为燃烧期。</p>
 <p>我们希望构造的马尔可夫链是细致平稳的，即 <span class="math display">\[p(\mathbf{z}) q(\mathbf{z} \rightarrow \mathbf{z}^*) \alpha (\mathbf{z}^*) = p(\mathbf{z}^*) q(\mathbf{z}^* \rightarrow \mathbf{z}) \alpha (\mathbf{z})\]</span> 这样，我们可以将 <span class="math inline">\(p\)</span> 看作目标分布，<span class="math inline">\(q\)</span> 看作建议分布， <span class="math inline">\(\alpha\)</span> 看作接受分布。</p>
 <p>假设要抽样的分布是 <span class="math inline">\(p(\mathbf{x})\)</span>，我们构建以 <span class="math inline">\(p(\mathbf{x}, \mathbf{x}^{&#39;})\)</span> 为转移核的马尔可夫链。 <span class="math display">\[p(\mathbf{x}, \mathbf{x}^{&#39;}) = q(\mathbf{x}, \mathbf{x}^{&#39;}) \alpha(\mathbf{x}, \mathbf{x}^{&#39;})\]</span> 其中 <span class="math inline">\(q(\mathbf{x}, \mathbf{x}^{&#39;})\)</span> 是不可约的，即其概率值恒不为0，同时是一个易于抽样的分布。接受分布 <span class="math inline">\(\alpha(\mathbf{x}, \mathbf{x}^{&#39;})\)</span> 可以表示如下： <span class="math display">\[\alpha(\mathbf{x}, \mathbf{x}^{&#39;}) = \min \left\{1, \frac{p(\mathbf{x}^{&#39;})q(\mathbf{x}^{&#39;}, \mathbf{x})}{p(\mathbf{x})q(\mathbf{x}, \mathbf{x}^{&#39;})}\right\}\]</span> 这样，转移核可以写为： <span class="math display">\[p(\mathbf{x}, \mathbf{x}^{&#39;}) = \begin{cases}
 q(\mathbf{x}, \mathbf{x}^{&#39;}), \quad &amp;p(\mathbf{x}^{&#39;})q(\mathbf{x}^{&#39;}, \mathbf{x}) \ge p(x)q(\mathbf{x}, \mathbf{x}^{&#39;}) \\
 q(\mathbf{x}^{&#39;}, \mathbf{x}) \frac{p(\mathbf{&#39;})}{p(\mathbf{x})}, \quad &amp; p(\mathbf{x}^{&#39;})q(\mathbf{x}^{&#39;}, \mathbf{x}) &lt; p(x)q(\mathbf{x}, \mathbf{x}^{&#39;}) 
-\end{cases}\]</span> 个人理解，之所以要加入 <span class="math inline">\(\min\)</span> 限制，是因为转移核作为概率值要始终不超过1。</p>
+\end{cases}\]</span> 个人理解，之所以要加入 <span class="math inline">\(\min\)</span> 限制，是因为转移核作为概率值要始终不超过1，且接受率不能超过1。</p>
 <p><span class="math inline">\(\color{red}{\textbf{定理 3 }}\)</span> 通过上述方式构造的马尔可夫链是可逆的，即 <span class="math display">\[p(\mathbf{x})p(\mathbf{x}, \mathbf{x}^{&#39;}) = p(\mathbf{x}^{&#39;})p(\mathbf{x}^{&#39;}, \mathbf{x})\]</span> 且 <span class="math inline">\(p(\mathbf{x})\)</span> 是该马尔可夫链的平稳分布。</p>
 <p><span class="math inline">\(\textbf{证明} \quad\)</span> 若 <span class="math inline">\(\mathbf{x} = \mathbf{x}^{&#39;}\)</span>，显然成立</p>
 <p>如果 <span class="math inline">\(\mathbf{x}\neq\mathbf{x}^{&#39;}\)</span>， 则 <span class="math display">\[\begin{split}
@@ -499,20 +501,20 @@ p(\mathbf{x})p(\mathbf{x}, \mathbf{x}^{&#39;}) &amp;= p(\mathbf{x}) q(\mathbf{x}
 <p>（1）对于任意一个初始值 <span class="math inline">\(\mathbf{x}_0\)</span></p>
 <p>（2）对 <span class="math inline">\(i=1,2,\cdots, n\)</span> 循环执行</p>
 <p><span class="math inline">\(\quad\)</span> （a）设状态 <span class="math inline">\(\mathbf{x}_{i-1} = \mathbf{x}\)</span>，按照建议分布随机抽取一个候选状态 <span class="math inline">\(\mathbf{x}^{&#39;}\)</span></p>
-<p><span class="math inline">\(\quad\)</span> （b） 计算接受概率 $(, ^{'}) = {1, } $</p>
+<p><span class="math inline">\(\quad\)</span> （b） 计算接受概率 <span class="math inline">\(\alpha(\mathbf{x}, \mathbf{x}^{&#39;}) = \min \left\{1, \frac{p(\mathbf{x}^{&#39;})q(\mathbf{x}^{&#39;}, \mathbf{x})}{p(\mathbf{x})q(\mathbf{x}, \mathbf{x}^{&#39;})}\right\}\)</span></p>
 <p><span class="math inline">\(\quad\)</span> （c）从区间（0，1）中按照均匀分布随机抽取一个数 <span class="math inline">\(u\)</span>，如果 <span class="math inline">\(u \le \alpha(\mathbf{x}, \mathbf{x}^{&#39;})\)</span>，则状态 <span class="math inline">\(\mathbf{x}_i = \mathbf{x}^{&#39;}\)</span>，否则 <span class="math inline">\(\mathbf{x}_i = \mathbf{x}\)</span></p>
 <p>（3）得到样本集合 <span class="math inline">\(\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}\)</span></p>
 <p>计算 <span class="math display">\[f_{mn} = \frac{1}{n-m} \sum_{i=m+1}^n f(\mathbf{x}_i)\]</span></p>
 <p>这里要注意的是，我们这里使用的 <span class="math inline">\(p(\mathbf{x})\)</span> 实际上是 <span class="math inline">\(\hat{p}(\mathbf{x})\)</span>，是一个根据先验知识及似然概率推断出来的近似值，按理说还需要除以一个归一化因子，但实际上归一化因子很难求解，因此常常默认 <span class="math inline">\(p(\mathbf{x}) = \hat{p}(\mathbf{x})\)</span></p>
 <h2 id="gibbs-采样">4.2 Gibbs 采样</h2>
 <p>Gibbs采样是MH采样的一个特例，通常假设要采样的目标分布 <span class="math inline">\(p(\mathbf{x}^{(i)}) = p(z_1^{(i)},z_2^{(i)} , \cdots, z_K^{(i)})\)</span> 是高维的，需要一维一维的采，<strong>每次采样第<span class="math inline">\(i\)</span>维时，固定其他维</strong>。</p>
-<p>假设多元变量联合概率分布为 <span class="math inline">\(p(\mathbf{x}) = p(x_1, x_2, \cdots, x_k)\)</span>， 吉布斯采样从一个初始样本 <span class="math inline">\(x^{(0)} = (x^{(0)}_1, x^{(0)}_2, \cdots, x^{(0)}_k)^T\)</span> 出发不断迭代，每一次迭代得到联合分布的一个样本 <span class="math inline">\(\mathbf{x}^{(i)} = (x^{(i)}_1, x^{(i)}_2, \cdots, x^{(i)}_k)^T\)</span>，最终样本序列为 <span class="math inline">\(\{\mathbf{x}^{(0)}, \mathbf{x}^{(1)}, \cdots, \mathbf{x}^{(k)} \}\)</span>。</p>
+<p>假设多元变量联合概率分布为 <span class="math inline">\(p(\mathbf{x}) = p(x_1, x_2, \cdots, x_k)\)</span>， 吉布斯采样从一个初始样本 <span class="math inline">\(\mathbf{x}^{(0)} = (x^{(0)}_1, x^{(0)}_2, \cdots, x^{(0)}_k)^T\)</span> 出发不断迭代，每一次迭代得到联合分布的一个样本 <span class="math inline">\(\mathbf{x}^{(i)} = (x^{(i)}_1, x^{(i)}_2, \cdots, x^{(i)}_k)^T\)</span>，最终样本序列为 <span class="math inline">\(\{\mathbf{x}^{(0)}, \mathbf{x}^{(1)}, \cdots, \mathbf{x}^{(k)} \}\)</span>。</p>
 <p>在每次迭代中，依次对 <span class="math inline">\(k\)</span> 个随机变量中的一个变量进行随机抽样。如果在第 <span class="math inline">\(i\)</span> 次迭代中， 对滴 <span class="math inline">\(j\)</span> 个变量进行随机抽样，那么抽样的分布是满条件概率分布 <span class="math inline">\(p(x_j | x^{(i)}_{-j})\)</span>，这里 <span class="math inline">\(x^{(i)}_{-j}\)</span> 表示第 <span class="math inline">\(i\)</span> 次迭代中，变量 <span class="math inline">\(j\)</span> 以外的其他变量。</p>
 <p>吉布斯采样算法如下：</p>
 <p>输入： 目标概率分布的密度函数 <span class="math inline">\(p(\mathbf{x})\)</span>，函数 <span class="math inline">\(f(\mathbf{x})\)</span></p>
 <p>输出： <span class="math inline">\(p(\mathbf{x})\)</span> 的随机样本 <span class="math inline">\(\{\mathbf{x}_{m+1}, \mathbf{x}_{m+2}, \cdots, \mathbf{x}_{n}\}\)</span>，函数样本均值 <span class="math inline">\(f_{mn}\)</span></p>
 <p>参数： 收敛步数 <span class="math inline">\(m\)</span>， 迭代步数 <span class="math inline">\(n\)</span></p>
-<p>（1） 初始化初始样本 <span class="math inline">\(x^{(0)} = (x^{(0)}_1, x^{(0)}_2, \cdots, x^{(0)}_k)^T\)</span></p>
+<p>（1） 初始化初始样本 <span class="math inline">\(\mathbf{x}^{(0)} = (x^{(0)}_1, x^{(0)}_2, \cdots, x^{(0)}_k)^T\)</span></p>
 <p>（2） 对 <span class="math inline">\(i\)</span> 循环执行。设第 <span class="math inline">\((i-1)\)</span> 迭代结束时的样本为 <span class="math inline">\(\mathbf{x}^{(i-1)} = (x^{(i-1)}_1, x^{(i-1)}_2, \cdots, x^{(i-1)}_k)^T\)</span>，则第 <span class="math inline">\(i\)</span> 次的迭代进行如下几步操作：</p>
 <p><span class="math inline">\(\quad\)</span> 1) 由满条件分布 <span class="math inline">\(p(x_1|x^{(i-1)}_2, \cdots, x^{(i-1)}_k)\)</span> 抽取 <span class="math inline">\(x^{(i)}_1\)</span></p>
 <p><span class="math inline">\(\quad \quad \vdots\)</span></p>
