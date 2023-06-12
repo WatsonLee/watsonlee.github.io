@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://watsonlee.github.io/2023/05/26/LaplacianMatrix/example_graph.png">
 <meta property="og:image" content="http://watsonlee.github.io/2023/05/26/LaplacianMatrix/eigenvalue_of_diff_matrix.png">
 <meta property="article:published_time" content="2023-05-26T15:06:32.000Z">
-<meta property="article:modified_time" content="2023-06-12T11:19:12.322Z">
+<meta property="article:modified_time" content="2023-06-12T11:22:22.076Z">
 <meta property="article:author" content="Huacheng Li">
 <meta property="article:tag" content="拉普拉斯矩阵">
 <meta property="article:tag" content="图正则化">
@@ -399,12 +399,12 @@ R(L_{sym}, g)&amp;=\frac{g^T D^{-1/2} L D^{-1/2} g}{g^T g} = \frac{\left(D^{-1/2
 <p>滤波之后的图信号为： <span class="math display">\[y = g_\theta(\overline{L})x = \sum_{k=0}^K \theta_k T_k (\overline{L})x \overline{L} = \frac{2L_{sym}}{\lambda_{max}} - I_n \tag{12}\]</span></p>
 <p>前文证明过，<span class="math inline">\(L_{sym}\)</span>的特征值范围为[0,2]，因此经过放缩之后，特征值的范围为[-1, 1]。</p>
 <h1 id="重归一化拉普拉斯矩阵与gcn">5 重归一化拉普拉斯矩阵与GCN</h1>
-<h1 id="动机">5.1 动机</h1>
+<h2 id="动机">5.1 动机</h2>
 <p>在实际应用场景中，如果K值取值过高，那么对于包含度数较大的节点的图来说，一个卷积层的感受野很有可能覆盖几乎整张图，这样的话，即使堆叠了几层卷积层，后续卷积层的感受野仍然是整张图，重复执行全局平均操作，最终会导致输出图信号过平滑。</p>
 <p>为了缩小每一层的感受野，同时降低每一层的计算量，我们固定K=1， 根据归一化拉普拉斯矩阵的最大特征值为<span class="math inline">\(\lambda_{max} \approx 2\)</span>，得到一阶近似切比雪夫多项式： <span class="math display">\[y=\theta_0 x + \theta_1 (L-I_n)x = \theta_0 x - \theta_1 D^{-1/2} A D^{-1/2} x \tag{13} \]</span> 为了参数统一，设<span class="math inline">\(\theta_0 = - \theta_1 = \theta\)</span>, 则可以得到 <span class="math display">\[y = \theta(I_n + D^{-1/2}A D^{-1/2}) x = Hx \tag{14}\]</span> 由于 $I_n + D^{-1/2}A D^{-1/2} = I_n + D^{-1/2}(I_n - L)D^{-1/2} = 2I_n - L_{sym} $，它的特征值范围是[0,2]，连读堆叠这样的卷积层相当于引入了频率响应函数 <span class="math inline">\((2-\lambda_i)^K\)</span>，会过度放大 <span class="math inline">\(\lambda_i &lt;1\)</span> 频段的信号，进而引发某些参数梯度爆炸，另外一些参数梯度消失。</p>
-<h1 id="方法">5.2 方法</h1>
+<h2 id="方法">5.2 方法</h2>
 <p>为此，Kipf等人提出了重归一化操作（Renormalization Trick），为每个节点加上自环，得到新的邻接矩阵和度矩阵： <span class="math display">\[\tilde{A} = A+I_n, \tilde{D} = D+I_n \tag{15}\]</span> 此时，归一化拉普拉斯矩阵变为： <span class="math display">\[\tilde{L}_{sym} = \tilde{D}^{-1/2}(\tilde{D} - \tilde{A}) \tilde{D}^{-1/2} = \tilde{D}^{-1/2} L \tilde{D}^{-1/2} \]</span> 使用单位阵减去<span class="math inline">\(\tilde{L}_{sym}\)</span>，可以得到： <span class="math display">\[L_{renorm} = I_n - \tilde{D}^{-1/2} L \tilde{D}^{-1/2} = \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} \tag{16}\]</span> 因为公式（16）可以重写为 <span class="math display">\[L_{renorm} = I_n - \tilde{L}_{sym} = \tilde{U}^T I_n \tilde{U} - \tilde{U}^T \tilde{\Lambda} \tilde{U} = \tilde{U}^T (I_n - \tilde{\Lambda}) \tilde{U} \tag{17}\]</span> 因此，<span class="math inline">\(L_{renorm}\)</span>的频率响应函数为 <span class="math inline">\((1-\tilde{\lambda}_i)^K\)</span>，解决了低频段信号被过度放大的问题。</p>
-<h1 id="优势">5.3 优势</h1>
+<h2 id="优势">5.3 优势</h2>
 <p>本文中提到了以下三种归一化矩阵：</p>
 <ul>
 <li><p>归一化邻接矩阵 <span class="math inline">\(D^{-1/2} A D^{-1/2}\)</span>，未加自环，频率响应函数为 <span class="math inline">\((1-\lambda_i)^K\)</span></p></li>
