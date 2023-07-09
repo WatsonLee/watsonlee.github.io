@@ -194,7 +194,7 @@ $$y = g_\theta(\overline{L})x = \sum_{k=0}^K \theta_k T_k (\overline{L})x \overl
 
 # 5 重归一化拉普拉斯矩阵与GCN
 
-# 5.1 动机
+## 5.1 动机
 
 在实际应用场景中，如果K值取值过高，那么对于包含度数较大的节点的图来说，一个卷积层的感受野很有可能覆盖几乎整张图，这样的话，即使堆叠了几层卷积层，后续卷积层的感受野仍然是整张图，重复执行全局平均操作，最终会导致输出图信号过平滑。
 
@@ -204,7 +204,7 @@ $$y=\theta_0 x + \theta_1 (L-I_n)x = \theta_0 x - \theta_1 D^{-1/2} A D^{-1/2} x
 $$y = \theta(I_n + D^{-1/2}A D^{-1/2}) x = Hx \tag{14}$$
 由于 $I_n + D^{-1/2}A D^{-1/2} = I_n + D^{-1/2}(I_n - L)D^{-1/2} = 2I_n - L_{sym} $，它的特征值范围是[0,2]，连读堆叠这样的卷积层相当于引入了频率响应函数 $(2-\lambda_i)^K$，会过度放大 $\lambda_i <1$ 频段的信号，进而引发某些参数梯度爆炸，另外一些参数梯度消失。
 
-# 5.2 方法
+## 5.2 方法
 
 为此，Kipf等人提出了重归一化操作（Renormalization Trick），为每个节点加上自环，得到新的邻接矩阵和度矩阵：
 $$\tilde{A} = A+I_n, \tilde{D} = D+I_n \tag{15}$$
@@ -216,7 +216,7 @@ $$L_{renorm} = I_n - \tilde{D}^{-1/2} L \tilde{D}^{-1/2} = \tilde{D}^{-1/2} \til
 $$L_{renorm} = I_n - \tilde{L}_{sym} = \tilde{U}^T I_n \tilde{U} - \tilde{U}^T \tilde{\Lambda} \tilde{U} = \tilde{U}^T (I_n - \tilde{\Lambda}) \tilde{U} \tag{17}$$
 因此，$L_{renorm}$的频率响应函数为 $(1-\tilde{\lambda}_i)^K$，解决了低频段信号被过度放大的问题。
 
-# 5.3 优势
+## 5.3 优势
 
 本文中提到了以下三种归一化矩阵：
 
