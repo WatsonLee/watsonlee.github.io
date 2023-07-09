@@ -16,22 +16,24 @@
   <meta name="author" content="Huacheng Li">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Git仓库介绍 Git仓库包含两个分支，main和src_code，其中src_code存储的是markdown源代码，main分支存储的是markdown代码生成的网页源码。 2. 环境准备 需要安装NodeJs，Pandoc 3. 操作指令  新建一个文件夹 GitBlog 来保存博客源代码 进入GitBlog，安装hexo：npm install -g hexo-cli 将src_co">
+    <meta name="description" content="本文记录了在同一台电脑上安装Windows和Linux双系统并配置深度学习环境过程中一些关键要点。 1. 安装Linux双系统 安装过程参考此篇博文装了5次Ubuntu，告诉你win10+Ubuntu双系统的正确打开方式 - czpcalm的文章 - 知乎。 需要注意的是，建议boot分区和&#x2F;分区划分大一些。 2. 安装Cuda和cuDNN 2.1 安装Nvidia驱动 安装过程参考此篇博文Lin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo博客迁移">
-<meta property="og:url" content="http://watsonlee.github.io/2023/06/08/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/index.html">
+<meta property="og:title" content="Linux双系统配置DL环境">
+<meta property="og:url" content="http://watsonlee.github.io/2023/07/09/Linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEDL%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="努力减肥的小李">
-<meta property="og:description" content="1. Git仓库介绍 Git仓库包含两个分支，main和src_code，其中src_code存储的是markdown源代码，main分支存储的是markdown代码生成的网页源码。 2. 环境准备 需要安装NodeJs，Pandoc 3. 操作指令  新建一个文件夹 GitBlog 来保存博客源代码 进入GitBlog，安装hexo：npm install -g hexo-cli 将src_co">
+<meta property="og:description" content="本文记录了在同一台电脑上安装Windows和Linux双系统并配置深度学习环境过程中一些关键要点。 1. 安装Linux双系统 安装过程参考此篇博文装了5次Ubuntu，告诉你win10+Ubuntu双系统的正确打开方式 - czpcalm的文章 - 知乎。 需要注意的是，建议boot分区和&#x2F;分区划分大一些。 2. 安装Cuda和cuDNN 2.1 安装Nvidia驱动 安装过程参考此篇博文Lin">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-06-08T13:59:31.000Z">
-<meta property="article:modified_time" content="2023-06-12T11:19:12.321Z">
+<meta property="article:published_time" content="2023-07-09T06:36:50.000Z">
+<meta property="article:modified_time" content="2023-07-09T08:36:48.612Z">
 <meta property="article:author" content="Huacheng Li">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Cuda">
+<meta property="article:tag" content="代理">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Hexo博客迁移 - 努力减肥的小李</title>
+  <title>Linux双系统配置DL环境 - 努力减肥的小李</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hexo博客迁移"></span>
+            <span id="subtitle" data-typed-text="Linux双系统配置DL环境"></span>
           
         </div>
 
@@ -207,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-08 21:59" pubdate>
-          June 8, 2023 pm
+        <time datetime="2023-07-09 14:36" pubdate>
+          July 9, 2023 pm
         </time>
       </span>
     
@@ -219,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          407 words
+          701 words
         
       </span>
     
@@ -230,7 +232,7 @@
         
         
         
-          4 mins
+          6 mins
         
       </span>
     
@@ -268,24 +270,24 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hexo博客迁移</h1>
+            <h1 style="display: none">Linux双系统配置DL环境</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="git仓库介绍">1. Git仓库介绍</h1>
-<p>Git仓库包含两个分支，main和src_code，其中src_code存储的是markdown源代码，main分支存储的是markdown代码生成的网页源码。</p>
-<h1 id="环境准备">2. 环境准备</h1>
-<p>需要安装NodeJs，Pandoc</p>
-<h1 id="操作指令">3. 操作指令</h1>
-<ul>
-<li>新建一个文件夹 <code>GitBlog</code> 来保存博客源代码</li>
-<li>进入<code>GitBlog</code>，安装hexo：<code>npm install -g hexo-cli</code></li>
-<li>将src_code克隆至 <code>GitBlog</code></li>
-<li>安装hexo依赖: <code>npm install</code>。 如果有错误，如hexo-renderer-sass-next安装不上，可以单独安装 <code>npm install hexo-renderer-sass-next</code></li>
-<li>如果有需要，可以安装额外依赖，如 <code>npm install hexo-deployer-git --save</code></li>
-</ul>
-<p>注意，如果 <code>hexo-renderer-pandoc</code>报错，需要安装Pandoc。Pandoc是渲染数学公式Mathjax必要的，不可移除。</p>
+                <p>本文记录了在同一台电脑上安装Windows和Linux双系统并配置深度学习环境过程中一些关键要点。</p>
+<h1 id="安装linux双系统">1. 安装Linux双系统</h1>
+<p>安装过程参考此篇博文<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/101307629">装了5次Ubuntu，告诉你win10+Ubuntu双系统的正确打开方式 - czpcalm的文章 - 知乎</a>。</p>
+<p>需要注意的是，建议boot分区和/分区划分大一些。</p>
+<h1 id="安装cuda和cudnn">2. 安装Cuda和cuDNN</h1>
+<h2 id="安装nvidia驱动">2.1 安装Nvidia驱动</h2>
+<p>安装过程参考此篇博文<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79059379">Linux 下的 CUDA 安装和使用指南 - 知乎用户XXdFO7的文章 - 知乎</a>。</p>
+<p>如果安装驱动之后输入nvidia-smi出现 "NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver." 可以尝试参考下面博文 <a target="_blank" rel="noopener" href="https://clay-atlas.com/us/blog/2022/07/29/solved-nvidia-smi-has-failed-because-it-couldnt-communicate-with-the-nvidia-driver-make-sure-that-the-latest-nvidia-driver-is-installed-and-running/">Solved NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.</a>。其核心思想就是先移除已安装的驱动，再安装合适的版本驱动。</p>
+<h2 id="安装cuda和cudnn-1">2.2 安装Cuda和cuDNN</h2>
+<p>这里主要陈述时安装多个版本的cuda情况。可以参考如下博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42070745/article/details/113621393">ubuntu多个cuda与cudnn版本切换</a></p>
+<p>核心要义是环境变量配置为/usr/local/cuda，当切换时直接删除/usr/local/cuda，然后创建不同版本cuda指向cuda的软连接。</p>
+<h1 id="yooyun666-linux下的代理">3 Yooyun666 linux下的代理</h1>
+<p>严格按照网站给的教程来走即可，注意，所谓的clash-dashboard是一个网址，我们点击clash-board超链接即可。</p>
 
                 
               </div>
@@ -319,7 +321,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Hexo/">#Hexo</a>
+        <a href="/tags/Linux/">#Linux</a>
+      
+        <a href="/tags/Cuda/">#Cuda</a>
+      
+        <a href="/tags/%E4%BB%A3%E7%90%86/">#代理</a>
       
     </div>
   
@@ -331,8 +337,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hexo博客迁移</div>
-      <div>http://watsonlee.github.io/2023/06/08/Hexo博客迁移/</div>
+      <div>Linux双系统配置DL环境</div>
+      <div>http://watsonlee.github.io/2023/07/09/Linux双系统配置DL环境/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +350,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>June 8, 2023</div>
+          <div>July 9, 2023</div>
         </div>
       
       
@@ -376,18 +382,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/07/09/Linux%E5%8F%8C%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AEDL%E7%8E%AF%E5%A2%83/" title="Linux双系统配置DL环境">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux双系统配置DL环境</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/26/LaplacianMatrix/" title="LaplacianMatrix">
-                        <span class="hidden-mobile">LaplacianMatrix</span>
+                      <a href="/2023/06/08/Hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB/" title="Hexo博客迁移">
+                        <span class="hidden-mobile">Hexo博客迁移</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
